@@ -3,6 +3,7 @@ public class Fila {
     private NoDuplamenteEncadeado cabeca;
 
     public void inserirOrdenado(NoDuplamenteEncadeado no) {
+
         if (ListaVazia()) {
             setCabeca(no);
         } else {
@@ -13,16 +14,29 @@ public class Fila {
                 noTemp.setAnterior(no);
                 setCabeca(no);
             }else{
-                while (noTemp.getProximo() != null && noTemp.getProximo().getPrioridade() < no.getPrioridade()) {
+                while (noTemp.getProximo() != null && noTemp.getProximo().getPrioridade() <= no.getPrioridade()) {
                     noTemp = noTemp.getProximo();
                 }
+
                 no.setProximo(noTemp.getProximo());
                 no.setAnterior(noTemp);
 
                 if (noTemp.getProximo() != null) {
                     noTemp.getProximo().setAnterior(no);
                 }
+
                 noTemp.setProximo(no);
+            }
+        }
+    }
+
+    public void removerInicio() {
+        if (!ListaVazia()) {
+            if (cabeca.getProximo() == null) {
+                setCabeca(null);
+            } else {
+                cabeca.getProximo().setAnterior(null);
+                setCabeca(cabeca.getProximo());
             }
         }
     }
@@ -51,7 +65,7 @@ public class Fila {
         // Percorre a lista até o final
         while (atual != null) {
             // Imprime o valor do nó atual
-            System.out.println(" " + atual.getIndentificador() + ", " + atual.getPrioridade());
+            System.out.printf(" " + atual.getIndentificador() + ", " + atual.getPrioridade() +" | ");
 
             // Avança para o próximo nó
             atual = atual.getProximo();
