@@ -1,8 +1,9 @@
-public class Principal {
+import javax.swing.*;
 
+public class Principal {
     public static void main(String[] args) {
 
-        InterfaceGrafica i = new InterfaceGrafica();
+        TelaInicial telaInicial = new TelaInicial();
 
     }
 }
