@@ -92,7 +92,4 @@ public class TelaInicial extends JFrame{
         painel.add(painelFundo);
     }
 
-
-
-
 }

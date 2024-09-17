@@ -8,11 +8,10 @@ public class InterfaceGrafica extends JFrame {
     ArrayList<Integer> numeros = new ArrayList<>();
     private JTextField campoSenha; // Adicione um campo de texto para mostrar a senha
     Fila fila = new Fila();
-    private int senhasUsadas = 0;
+    private Integer senhasUsadas = 0;
 
     public InterfaceGrafica() {
         gerarTela();
-        gerarId();
         botaoPCD();
         botaoPrioridade();
         botaoSemPrioridade();
@@ -46,7 +45,7 @@ public class InterfaceGrafica extends JFrame {
     }
 
 
-    protected void botaoPCD() {
+    public void botaoPCD() {
         JButton botao_pcd = new JButton("PCD");
         botao_pcd.setBounds(20, 100, 350, 50);
         botao_pcd.setFont(new Font("Arial", Font.BOLD, 25));
@@ -64,7 +63,7 @@ public class InterfaceGrafica extends JFrame {
         });
     }
 
-    protected void botaoPrioridade() {
+    public void botaoPrioridade() {
         JButton botao_prioridade = new JButton("Idoso, Gestante, Autista Lactantes, Obesos");
         botao_prioridade.setBounds(20, 170, 350, 50);
         botao_prioridade.setFont(new Font("Arial", Font.BOLD, 25));
@@ -84,7 +83,7 @@ public class InterfaceGrafica extends JFrame {
         });
     }
 
-    protected void botaoSemPrioridade() {
+    public void botaoSemPrioridade() {
         JButton botao_sem_prioridade = new JButton("Sem prioridade");
         botao_sem_prioridade.setBounds(20, 240, 350, 50);
         botao_sem_prioridade.setFont(new Font("Arial", Font.BOLD, 25));
@@ -101,7 +100,7 @@ public class InterfaceGrafica extends JFrame {
         });
     }
 
-    protected void botaoRemover() {
+    public void botaoRemover() {
         JButton botao_remover = new JButton("Chamar Senha");
         botao_remover.setBounds(20, 310, 350, 50);
         botao_remover.setFont(new Font("Arial", Font.BOLD, 25));
@@ -117,7 +116,7 @@ public class InterfaceGrafica extends JFrame {
         });
     }
 
-    protected void botaoSair() {
+    public void botaoSair() {
         JButton botao_sair = new JButton("Sair");
         botao_sair.setBounds(20, 380, 350, 50);
         botao_sair.setFont(new Font("Arial", Font.BOLD, 25));
@@ -128,15 +127,30 @@ public class InterfaceGrafica extends JFrame {
         botao_sair.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int resposta = JOptionPane.showConfirmDialog(null, "Deseja realmente sair do programa?", "Confirmar saída", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (resposta == JOptionPane.YES_OPTION) {
-                    System.exit(0);
+                if(fila.getCabeca() != null){
+
+                    int resposta = JOptionPane.showConfirmDialog(null,
+                            "Ainda existem senhas que não foram chamadas, se sair perderar a lista de pessoas",
+                            "Confirmar saída", JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
+                }else{
+                    int resposta = JOptionPane.showConfirmDialog(null,
+                            "Deseja realmente sair do programa?",
+                            "Confirmar saída", JOptionPane.YES_NO_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                    if (resposta == JOptionPane.YES_OPTION) {
+                        System.exit(0);
+                    }
                 }
+
             }
         });
     }
 
-    protected void adicionarTextoMenuPrioridade() {
+    public void adicionarTextoMenuPrioridade() {
         JLabel texto_menu_prioridade = new JLabel("MENU PRIORIDADE", JLabel.CENTER);
         texto_menu_prioridade.setBounds(20, 40, 349, 50);
         texto_menu_prioridade.setFont(new Font("Arial", Font.BOLD, 30));
@@ -145,7 +159,7 @@ public class InterfaceGrafica extends JFrame {
         add(texto_menu_prioridade);
     }
 
-    protected void adicionarTextoSenhasAtivas() {
+    public void adicionarTextoSenhasAtivas() {
         JLabel texto_Senhas_Ativas = new JLabel("SENHAS ATIVAS", JLabel.CENTER);
         texto_Senhas_Ativas.setBounds(400, 40, 349, 50);
         texto_Senhas_Ativas.setFont(new Font("Arial", Font.BOLD, 30));
@@ -156,7 +170,7 @@ public class InterfaceGrafica extends JFrame {
         repaint();     // Redesenha o componente
     }
 
-    protected void adicionarCampoSenha() {
+    public void adicionarCampoSenha() {
         campoSenha = new JTextField();
         campoSenha.setBounds(400, 450, 350, 50);
         campoSenha.setFont(new Font("Arial", Font.PLAIN, 25));
@@ -166,24 +180,18 @@ public class InterfaceGrafica extends JFrame {
     }
 
     public void gerarId() {
-        int n = 200;
-        for (int i = 1; i <= n; i++) {
-            numeros.add(i);
-        }
+        senhasUsadas++;
+        numeros.add(senhasUsadas);
     }
 
     public void mostrarSenha() {
-        if (senhasUsadas < numeros.size()) {
-            campoSenha.setText("Senha Gerada: " + numeros.get(senhasUsadas));
-            senhasUsadas++;
-        } else {
-            campoSenha.setText("Nenhuma senha disponível.");
-        }
+        campoSenha.setText("Senha Gerada: " + numeros.get(senhasUsadas-1));
+
     }
 
     private JTextArea campoLista;
 
-    protected void adicionarCampoLista() {
+    public void adicionarCampoLista() {
         campoLista = new JTextArea();
         campoLista.setFont(new Font("Arial", Font.PLAIN, 25));
         campoLista.setForeground(Color.BLACK);
@@ -203,10 +211,23 @@ public class InterfaceGrafica extends JFrame {
         int posicao = 1;
 
         while (noTemp != null) {
-            sb.append("").append(posicao).append("° Senha : ").append(noTemp.getIndentificador()).append("\n");
-            sb.append("__________________________________").append("\n");
-            noTemp = noTemp.getProximo();
-            posicao++;
+            if(noTemp.getPrioridade() == 0){
+                sb.append("").append(posicao).append("ª Senha : ").append(noTemp.getIndentificador()).append(" | PCD\n");
+                sb.append("__________________________________").append("\n");
+                noTemp = noTemp.getProximo();
+                posicao++;
+            }else if(noTemp.getPrioridade() == 1){
+                sb.append("").append(posicao).append("ª Senha : ").append(noTemp.getIndentificador()).append(" | IGA\n");
+                sb.append("__________________________________").append("\n");
+                noTemp = noTemp.getProximo();
+                posicao++;
+            }else{
+                sb.append("").append(posicao).append("ª Senha : ").append(noTemp.getIndentificador()).append(" | SP\n");
+                sb.append("__________________________________").append("\n");
+                noTemp = noTemp.getProximo();
+                posicao++;
+            }
+
         }
 
         campoLista.setText(sb.toString());
@@ -216,15 +237,21 @@ public class InterfaceGrafica extends JFrame {
         criarNoNaFila(codigo);
     }
 
+    /**
+     *
+     * @param codigo
+     * @return boolean
+     */
     public boolean criarNoNaFila(int codigo) {
-        NoDuplamenteEncadeado no = new NoDuplamenteEncadeado(numeros.get(senhasUsadas), codigo);
-        if (senhasUsadas < numeros.size()) {
-            fila.inserirOrdenado(no);
-            mostrarFila(fila);
-            return true;
-        } else {
-            return false;
-        }
+
+        gerarId();
+
+        NoDuplamenteEncadeado no = new NoDuplamenteEncadeado(numeros.get(senhasUsadas-1), codigo);
+
+        fila.inserirOrdenado(no);
+        mostrarFila(fila);
+        return true;
+
     }
 
     public boolean chamarSenha() {

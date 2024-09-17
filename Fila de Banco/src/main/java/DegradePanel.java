@@ -4,7 +4,7 @@ import java.awt.*;
 public class DegradePanel extends JPanel {
 
     @Override
-    protected void paintComponent(Graphics g) {
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         // Obtém o objeto Graphics2D para desenhar o gradiente
