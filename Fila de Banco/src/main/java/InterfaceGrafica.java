@@ -238,9 +238,11 @@ public class InterfaceGrafica extends JFrame {
     }
 
     /**
+     * Esté método cria um identificador que é sequencial e e insere o no duplamente
+     * encadeado na fila, junto com seu codigo de prioridade.
      *
-     * @param codigo
-     * @return boolean
+     * @param codigo prioridade para saber onde essa pessoa deve está na fila
+     * @return boolean se deu certo a operação de inserir
      */
     public boolean criarNoNaFila(int codigo) {
 
